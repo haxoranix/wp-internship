@@ -727,12 +727,15 @@
       next.addEventListener("click",function(){
         if(!isDone(state.current)){state.completedChapters.push(state.current);state.completedChapters.sort(function(a,b){return a-b})}
         if(state.current<chapters.length-1)state.current+=1;
-        save();render();
+        save();
+
         if(state.completed && state.current===chapters.length-1){
-          window.setTimeout(function(){completeCard.scrollIntoView({behavior:"smooth",block:"center"})},120);
-        }else{
-          window.scrollTo({top:document.querySelector(".layout").offsetTop-82,behavior:"smooth"});
+          window.location.href="./quiz.html";
+          return;
         }
+
+        render();
+        window.scrollTo({top:document.querySelector(".layout").offsetTop-82,behavior:"smooth"});
       });
       render();
     })();
