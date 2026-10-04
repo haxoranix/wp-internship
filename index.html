@@ -637,7 +637,7 @@
             </section>
           </article>
 
-          <div class="actions">
+          <div id="chapterActions" class="actions">
             <button id="prev" class="btn btn-secondary" type="button">Previous Chapter</button>
             <button id="next" class="btn btn-primary" type="button">Complete Chapter & Continue</button>
           </div>
@@ -645,8 +645,8 @@
 
         <section id="completeCard" class="complete-card">
           <p class="eyebrow">Module 1 Complete</p>
-          <h2>You have covered all 15 fundamentals.</h2>
-          <p>You can now move to the assessment and test how well the concepts are clear.</p>
+          <h2>Ready for the Module 1 Quiz</h2>
+          <p>You have completed all 15 WordPress Fundamentals chapters. Continue to the assessment.</p>
           <a class="btn btn-primary quiz-link" href="./quiz.html">Start Module 1 Quiz</a>
         </section>
       </div>
@@ -664,6 +664,7 @@
       var progressText=document.getElementById("progressText");
       var progressBar=document.getElementById("progressBar");
       var completeCard=document.getElementById("completeCard");
+      var chapterActions=document.getElementById("chapterActions");
 
       function fresh(){return {current:0,completedChapters:[],completed:false}}
       function load(){
@@ -696,7 +697,12 @@
           t.textContent=ch.getAttribute("data-title");
           c.className="check";c.textContent="✓";
           b.appendChild(n);b.appendChild(t);b.appendChild(c);
-          b.addEventListener("click",function(){state.current=i;save();render();window.scrollTo({top:document.querySelector(".layout").offsetTop-82,behavior:"smooth"})});
+          b.addEventListener("click",function(){state.current=i;save();render();
+        if(state.completed && state.current===chapters.length-1){
+          window.setTimeout(function(){completeCard.scrollIntoView({behavior:"smooth",block:"center"})},120);
+        }else{
+          window.scrollTo({top:document.querySelector(".layout").offsetTop-82,behavior:"smooth"});
+        }});
           nav.appendChild(b);
         })
       }
@@ -704,14 +710,15 @@
         chapters.forEach(function(ch,i){ch.classList.toggle("active",i===state.current)});
         prev.disabled=state.current===0;
         if(isDone(state.current)){
-          next.textContent=state.current===chapters.length-1?"Chapter Completed":"Next Chapter";
+          next.textContent=state.current===chapters.length-1?"Module 1 Complete":"Next Chapter";
         }else{
-          next.textContent=state.current===chapters.length-1?"Complete Final Chapter":"Complete Chapter & Continue";
+          next.textContent=state.current===chapters.length-1?"Complete Module 1":"Complete Chapter & Continue";
         }
         var count=state.completedChapters.length;
         progressText.textContent=count+" of "+chapters.length+" complete";
         progressBar.style.width=Math.round(count/chapters.length*100)+"%";
         completeCard.classList.toggle("show",count>=chapters.length);
+        chapterActions.style.display=(count>=chapters.length && state.current===chapters.length-1)?"none":"flex";
         renderNav();
       }
       prev.addEventListener("click",function(){
