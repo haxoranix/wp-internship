@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>WordPress Module 1 Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #1769e0;
+      --blue-dark: #0d4fb8;
+      --blue-soft: #eef6ff;
+      --blue-soft-2: #f7fbff;
+      --ink: #10213b;
+      --muted: #617089;
+      --line: #dbe7f5;
+      --white: #ffffff;
+      --danger: #b42318;
+      --danger-bg: #fff4f2;
+      --success: #12643a;
+      --success-bg: #f1fbf5;
+      --shadow: 0 18px 50px rgba(23, 105, 224, 0.08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: #f7fbff;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(23, 105, 224, 0.08), transparent 28rem),
+        linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+      font-size: 18px;
+      line-height: 1.65;
+      letter-spacing: normal;
+    }
+
+    button,
+    input {
+      font: inherit;
+      letter-spacing: normal;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .shell {
+      width: min(980px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 48px 0 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--blue);
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 54px);
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 0 0 14px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 18px;
+      font-size: clamp(38px, 6vw, 58px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      margin-bottom: 16px;
+      font-size: clamp(30px, 4vw, 40px);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-size: 22px;
+      line-height: 1.35;
+      letter-spacing: normal;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .lead {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 34px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: var(--blue-soft-2);
+      border-radius: 999px;
+      padding: 8px 13px;
+      color: #40516c;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 9px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .name-input {
+      width: 100%;
+      height: 58px;
+      border: 1px solid #bfd2eb;
+      border-radius: 14px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 0 16px;
+      font-size: 18px;
+      outline: none;
+      transition: 160ms ease;
+    }
+
+    .name-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(23, 105, 224, 0.1);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      min-height: 52px;
+      border: 0;
+      border-radius: 13px;
+      padding: 12px 20px;
+      font-size: 17px;
+      font-weight: 700;
+      transition: 160ms ease;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .btn-secondary:hover {
+      border-color: #aac7e9;
+      background: var(--blue-soft-2);
+    }
+
+    .notice {
+      margin-top: 26px;
+      border-left: 4px solid var(--blue);
+      border-radius: 10px;
+      background: var(--blue-soft);
+      padding: 17px 18px;
+      color: #314661;
+      font-size: 17px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .quiz-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+
+    .question-count {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .progress {
+      height: 9px;
+      width: 100%;
+      background: #eaf1f9;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 38px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: var(--blue);
+      border-radius: inherit;
+      transition: width 240ms ease;
+    }
+
+    .topic {
+      display: inline-block;
+      margin-bottom: 13px;
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .question {
+      max-width: 850px;
+      font-size: clamp(27px, 4vw, 36px);
+      line-height: 1.32;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 16px 17px;
+      font-size: 18px;
+      line-height: 1.55;
+      transition: 150ms ease;
+    }
+
+    .option:hover:not(:disabled) {
+      border-color: #95bdec;
+      background: var(--blue-soft-2);
+      transform: translateY(-1px);
+    }
+
+    .option:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .option-letter {
+      flex: 0 0 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .option.correct {
+      border-color: #78ba93;
+      background: var(--success-bg);
+    }
+
+    .option.correct .option-letter {
+      background: #dff4e7;
+      color: var(--success);
+    }
+
+    .option.wrong {
+      border-color: #e4a49d;
+      background: var(--danger-bg);
+    }
+
+    .option.wrong .option-letter {
+      background: #fbe0dc;
+      color: var(--danger);
+    }
+
+    .feedback {
+      margin-top: 24px;
+      border-radius: 16px;
+      padding: 20px;
+      font-size: 18px;
+    }
+
+    .feedback.correct-feedback {
+      border: 1px solid #bce0ca;
+      background: var(--success-bg);
+    }
+
+    .feedback.wrong-feedback {
+      border: 1px solid #f0c3bd;
+      background: var(--danger-bg);
+    }
+
+    .feedback-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 8px;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .feedback p {
+      margin-bottom: 8px;
+    }
+
+    .feedback p:last-child {
+      margin-bottom: 0;
+    }
+
+    .feedback strong {
+      font-weight: 700;
+    }
+
+    .result-header {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .score-main,
+    .score-summary {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--white);
+      padding: 26px;
+    }
+
+    .score-main {
+      background: linear-gradient(145deg, #f0f7ff 0%, #ffffff 70%);
+    }
+
+    .score-number {
+      color: var(--blue);
+      font-size: clamp(52px, 8vw, 78px);
+      font-weight: 700;
+      line-height: 1;
+      margin: 8px 0 12px;
+      letter-spacing: -0.04em;
+    }
+
+    .score-name {
+      margin: 0;
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      border-radius: 12px;
+      background: var(--blue-soft-2);
+      border: 1px solid var(--line);
+      padding: 14px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      line-height: 1.1;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .lock-note {
+      margin-top: 14px;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .review-heading {
+      margin-top: 42px;
+      margin-bottom: 8px;
+    }
+
+    .review-intro {
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .review-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .review-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--white);
+      padding: 22px;
+    }
+
+    .review-card .review-topic {
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .review-card h3 {
+      margin-bottom: 14px;
+    }
+
+    .review-line {
+      margin-bottom: 8px;
+      font-size: 17px;
+      color: #384a64;
+    }
+
+    .concept-note {
+      margin-top: 13px;
+      border-radius: 11px;
+      background: var(--blue-soft);
+      padding: 14px 15px;
+      font-size: 17px;
+      color: #2f4664;
+    }
+
+    .perfect {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--blue-soft);
+      padding: 22px;
+      color: #2f4664;
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 24px;
+      color: #7b8799;
+      font-size: 14px;
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100% - 22px, 980px);
+        padding: 24px 0 44px;
+      }
+
+      .card {
+        padding: 24px 19px;
+        border-radius: 18px;
+      }
+
+      .result-header {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz-top {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .score-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .brand,
+      .result-actions,
+      .footer-note {
+        display: none !important;
+      }
+
+      .card {
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .review-card,
+      .score-main,
+      .score-summary {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="brand">
+      <span class="brand-mark">WP</span>
+      <span>Hostcode Internship</span>
+    </div>
+
+    <section id="startScreen" class="card">
+      <p class="eyebrow">Module 1 Assessment</p>
+      <h1>WordPress Fundamentals Quiz</h1>
+      <p class="lead">
+        Test your understanding of WordPress fundamentals, architecture, dashboard, content, themes, plugins, users, settings, media, updates, files, database basics, and safe customization.
+      </p>
+
+      <div class="meta-row">
+        <span class="pill">45 questions</span>
+        <span class="pill">One attempt</span>
+        <span class="pill">Immediate learning feedback</span>
+      </div>
+
+      <label class="field-label" for="internName">Enter your full name</label>
+      <input id="internName" class="name-input" type="text" autocomplete="name" maxlength="80" placeholder="Your name">
+
+      <div class="actions">
+        <button id="startBtn" class="btn btn-primary" type="button">Start Quiz</button>
+      </div>
+
+      <div class="notice">
+        Once you start, your progress is saved in this browser. After you complete the quiz, the attempt is locked and this browser will show your final score and learning notes instead of allowing another attempt.
+      </div>
+    </section>
+
+    <section id="quizScreen" class="card hidden">
+      <div class="quiz-top">
+        <div>
+          <p id="quizName" class="eyebrow"></p>
+          <div id="questionCount" class="question-count"></div>
+        </div>
+        <div id="liveScore" class="question-count"></div>
+      </div>
+
+      <div class="progress" aria-hidden="true">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <div id="topic" class="topic"></div>
+      <h2 id="questionText" class="question"></h2>
+      <div id="options" class="options"></div>
+      <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+      <div id="nextWrap" class="actions hidden">
+        <button id="nextBtn" class="btn btn-primary" type="button">Next Question</button>
+      </div>
+    </section>
+
+    <section id="resultScreen" class="card hidden">
+      <p class="eyebrow">Module 1 Result</p>
+      <h2>Assessment Complete</h2>
+      <p class="lead">Your attempt is complete and locked on this browser. Review every incorrect answer and the correct concept below.</p>
+
+      <div class="result-header">
+        <div class="score-main">
+          <div>Final score</div>
+          <div id="scorePercent" class="score-number"></div>
+          <p id="resultName" class="score-name"></p>
+          <div id="completedAt" class="lock-note"></div>
+        </div>
+
+        <div class="score-summary">
+          <h3>Score Card</h3>
+          <div class="score-grid">
+            <div class="stat">
+              <div id="rightCount" class="stat-value">0</div>
+              <div class="stat-label">Right answers</div>
+            </div>
+            <div class="stat">
+              <div id="wrongCount" class="stat-value">0</div>
+              <div class="stat-label">Wrong answers</div>
+            </div>
+            <div class="stat">
+              <div id="totalCount" class="stat-value">0</div>
+              <div class="stat-label">Total questions</div>
+            </div>
+            <div class="stat">
+              <div id="scoreText" class="stat-value">0/0</div>
+              <div class="stat-label">Raw score</div>
+            </div>
+          </div>
+          <div class="lock-note">Retake is disabled after completion.</div>
+        </div>
+      </div>
+
+      <div class="result-actions actions">
+        <button id="printBtn" class="btn btn-secondary" type="button">Print / Save Result</button>
+        <button id="copyBtn" class="btn btn-secondary" type="button">Copy Score Summary</button>
+      </div>
+
+      <h2 class="review-heading">Wrong Answer Notes</h2>
+      <p class="review-intro">Each note shows the answer you selected, the correct answer, and the concept to remember.</p>
+      <div id="reviewList" class="review-list"></div>
+    </section>
+
+    <div class="footer-note">WordPress Internship Training - Module 1</div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var STORAGE_KEY = "hostcode_wp_module1_quiz_v1";
+
+      var questions = [
+        {
+          topic: "What Is WordPress?",
+          question: "Which description best explains WordPress?",
+          options: [
+            "A content management system used to create and manage websites",
+            "A web browser used to open websites",
+            "A hosting server that automatically publishes any website",
+            "A database program used only for e-commerce stores"
+          ],
+          answer: 0,
+          explanation: "WordPress is a content management system, or CMS. It gives users and developers a structured way to create, organize, publish, and manage website content."
+        },
+        {
+          topic: "What Is WordPress?",
+          question: "What is the main difference between WordPress.org and WordPress.com?",
+          options: [
+            "WordPress.org is only for blogs, while WordPress.com is only for business sites",
+            "WordPress.org provides the WordPress software for self-hosted sites, while WordPress.com provides a hosted WordPress service",
+            "WordPress.org is the paid version and WordPress.com is always free",
+            "There is no practical difference between them"
+          ],
+          answer: 1,
+          explanation: "WordPress.org is where the open-source WordPress software is available for self-hosted websites. WordPress.com is a hosted service built around WordPress."
+        },
+        {
+          topic: "What Is WordPress?",
+          question: "Which result does WordPress NOT guarantee automatically just because it is installed?",
+          options: [
+            "A dashboard for managing website content",
+            "A system for themes and plugins",
+            "A perfectly secure, fast, optimized, and maintained website without any further work",
+            "The ability to create pages and posts"
+          ],
+          answer: 2,
+          explanation: "WordPress provides the platform, but security, performance, SEO, backups, maintenance, design quality, and correct configuration still require proper setup and ongoing work."
+        },
+
+        {
+          topic: "WordPress Architecture",
+          question: "Which part of WordPress stores persistent information such as posts, users, settings, and metadata?",
+          options: [
+            "The database",
+            "The active theme only",
+            "The browser cache",
+            "The Media Library folder only"
+          ],
+          answer: 0,
+          explanation: "The database stores structured WordPress data such as posts, users, options, and metadata. Files such as themes, plugins, and uploaded media live in the file system."
+        },
+        {
+          topic: "WordPress Architecture",
+          question: "What is the primary job of a WordPress theme?",
+          options: [
+            "Store all website users",
+            "Control presentation, templates, and much of the site's visual structure",
+            "Replace the WordPress database",
+            "Handle every possible feature on the website"
+          ],
+          answer: 1,
+          explanation: "A theme controls the website's presentation and templates. Plugins generally add or extend functionality, while content and settings are stored separately."
+        },
+        {
+          topic: "WordPress Architecture",
+          question: "Where are normal WordPress media uploads usually stored?",
+          options: [
+            "Inside wp-admin",
+            "Inside wp-includes",
+            "Inside wp-content/uploads",
+            "Inside the database as the complete image file"
+          ],
+          answer: 2,
+          explanation: "Uploaded media files are normally stored under wp-content/uploads. WordPress also stores attachment information and metadata about those files in the database."
+        },
+
+        {
+          topic: "Understanding the WordPress Dashboard",
+          question: "Where should you normally go in the WordPress dashboard to create a new blog article?",
+          options: [
+            "Posts",
+            "Media",
+            "Tools",
+            "Users"
+          ],
+          answer: 0,
+          explanation: "Blog articles and chronological publishing content normally belong under Posts."
+        },
+        {
+          topic: "Understanding the WordPress Dashboard",
+          question: "Which dashboard section is used to activate, deactivate, add, or review installed plugins?",
+          options: [
+            "Appearance",
+            "Plugins",
+            "Pages",
+            "Settings"
+          ],
+          answer: 1,
+          explanation: "Plugin management belongs in the Plugins section. Appearance is mainly for themes and presentation-related controls."
+        },
+        {
+          topic: "Understanding the WordPress Dashboard",
+          question: "Where do site-wide options such as Reading and Permalink settings belong?",
+          options: [
+            "Settings",
+            "Posts",
+            "Comments",
+            "Media"
+          ],
+          answer: 0,
+          explanation: "The Settings area contains major site-wide configuration sections such as General, Reading, Discussion, Media, Permalinks, and Privacy."
+        },
+
+        {
+          topic: "Pages vs Posts",
+          question: "Which content type is usually the better choice for an About Us page?",
+          options: [
+            "Post",
+            "Page",
+            "Category",
+            "Tag"
+          ],
+          answer: 1,
+          explanation: "An About Us page is permanent, standalone website content, so it normally belongs as a Page."
+        },
+        {
+          topic: "Pages vs Posts",
+          question: "A company publishes a weekly news update that should appear in reverse chronological order. What should it normally use?",
+          options: [
+            "A Post",
+            "A permanent Page",
+            "A Plugin",
+            "A User profile"
+          ],
+          answer: 0,
+          explanation: "Posts are designed for chronological publishing such as news, updates, and blog articles."
+        },
+        {
+          topic: "Pages vs Posts",
+          question: "Which is a common content-structure mistake?",
+          options: [
+            "Using Pages for permanent service pages",
+            "Using Posts for regularly published articles",
+            "Using Posts for core permanent pages only because they were easier to create",
+            "Using Pages for Contact and About content"
+          ],
+          answer: 2,
+          explanation: "Core permanent website content should normally be built as Pages. Using Posts for permanent pages can create confusing archives, taxonomy, and content organization."
+        },
+
+        {
+          topic: "Categories, Tags and Taxonomies",
+          question: "Which statement best describes categories and tags in WordPress?",
+          options: [
+            "They are both ways to group and organize content",
+            "They are both user roles",
+            "They are both theme templates",
+            "They are both database backup tools"
+          ],
+          answer: 0,
+          explanation: "Categories and tags are taxonomies used to organize content. Categories usually provide broader structure, while tags can connect specific topics across posts."
+        },
+        {
+          topic: "Categories, Tags and Taxonomies",
+          question: "Why should an intern avoid creating a new category for every small wording variation?",
+          options: [
+            "WordPress allows only five categories",
+            "Random categories can fragment content structure and create messy or weak archive organization",
+            "Categories cannot contain posts",
+            "Categories automatically delete old content"
+          ],
+          answer: 1,
+          explanation: "Categories should reflect a planned content structure. Random or duplicate categories fragment the site and make content harder to manage and navigate."
+        },
+        {
+          topic: "Categories, Tags and Taxonomies",
+          question: "Which example best shows the relationship between categories and tags?",
+          options: [
+            "Category: SEO Guides; Tags: WordPress, Local SEO, Technical SEO",
+            "Category: Administrator; Tags: Editor, Author",
+            "Category: Theme; Tags: Plugin, Database",
+            "Category: Uploads; Tags: wp-admin, wp-includes"
+          ],
+          answer: 0,
+          explanation: "A category can group a broad content area, while tags can identify topics that cross multiple articles."
+        },
+
+        {
+          topic: "Themes",
+          question: "What does a WordPress theme mainly control?",
+          options: [
+            "The site's visual presentation, layouts, and templates",
+            "Only the user passwords",
+            "Only the database backups",
+            "The web hosting billing account"
+          ],
+          answer: 0,
+          explanation: "Themes control visual presentation and template structure. They do not replace hosting, the database, or WordPress Core."
+        },
+        {
+          topic: "Themes",
+          question: "Why is a child theme useful when code-level theme customization is required?",
+          options: [
+            "It deletes the parent theme",
+            "It allows customizations to be separated from the parent theme so parent updates are less likely to overwrite them",
+            "It removes the need for WordPress Core",
+            "It automatically makes every plugin compatible"
+          ],
+          answer: 1,
+          explanation: "A child theme inherits from a parent theme while providing a safer place for theme-level customizations that should survive parent theme updates."
+        },
+        {
+          topic: "Themes",
+          question: "Why can changing the active theme affect a website even when the content remains in WordPress?",
+          options: [
+            "Themes can change templates, styling, layouts, and theme-specific behavior",
+            "Changing a theme always deletes the database",
+            "Themes store the hosting account password",
+            "A theme change automatically removes every uploaded image"
+          ],
+          answer: 0,
+          explanation: "Content may remain stored, but the active theme controls how much of that content is presented. A theme switch can change templates, layout, styling, and theme-specific features."
+        },
+
+        {
+          topic: "Plugins",
+          question: "What is the main purpose of a WordPress plugin?",
+          options: [
+            "Add or extend website functionality",
+            "Replace the entire database server",
+            "Act as the site's domain name",
+            "Store every uploaded image"
+          ],
+          answer: 0,
+          explanation: "Plugins extend WordPress with functionality such as forms, SEO tools, security, builders, e-commerce, integrations, and many other features."
+        },
+        {
+          topic: "Plugins",
+          question: "Why can a large or poorly managed plugin stack become a problem?",
+          options: [
+            "WordPress stops working after exactly 20 plugins",
+            "Plugins can introduce conflicts, security exposure, maintenance overhead, or performance cost depending on their quality and behavior",
+            "Every plugin automatically creates a new domain",
+            "Plugins cannot be updated"
+          ],
+          answer: 1,
+          explanation: "The problem is not a fixed plugin count. Poorly chosen, overlapping, outdated, or heavy plugins can create conflicts, security risk, maintenance work, and performance issues."
+        },
+        {
+          topic: "Plugins",
+          question: "What does a plugin dependency mean?",
+          options: [
+            "One plugin or add-on requires another plugin or component to work correctly",
+            "A plugin must always depend on a theme",
+            "Every plugin requires a different domain name",
+            "The plugin can never be disabled"
+          ],
+          answer: 0,
+          explanation: "Some plugins are add-ons or extensions and require a parent plugin or another component. Removing or disabling a dependency can break the dependent feature."
+        },
+
+        {
+          topic: "WordPress Users and Roles",
+          question: "Which standard WordPress role normally has the broadest access to site administration?",
+          options: [
+            "Subscriber",
+            "Contributor",
+            "Author",
+            "Administrator"
+          ],
+          answer: 3,
+          explanation: "Administrator is the standard role with the broadest site-level access. It should be given only when that level of permission is actually required."
+        },
+        {
+          topic: "WordPress Users and Roles",
+          question: "An employee only needs to edit and publish website content. Which principle should guide the role you give them?",
+          options: [
+            "Give everyone Administrator access",
+            "Use the least privilege needed to perform the job",
+            "Create a second hosting account",
+            "Disable all user roles"
+          ],
+          answer: 1,
+          explanation: "Least privilege means users should receive only the permissions required for their work. This reduces accidental changes and security risk."
+        },
+        {
+          topic: "WordPress Users and Roles",
+          question: "Which role is generally more appropriate for someone managing and publishing content across the site without needing full plugin or theme administration?",
+          options: [
+            "Editor",
+            "Subscriber",
+            "Administrator in every case",
+            "No account at all"
+          ],
+          answer: 0,
+          explanation: "Editor is designed for broad content management. Administrator should be reserved for users who truly need site-wide administrative access."
+        },
+
+        {
+          topic: "WordPress Settings",
+          question: "Which Settings section controls items such as the homepage display and posts page?",
+          options: [
+            "Reading",
+            "Discussion",
+            "Media",
+            "Users"
+          ],
+          answer: 0,
+          explanation: "Reading settings control how the site's front page and posts page behave, along with other reading-related options."
+        },
+        {
+          topic: "WordPress Settings",
+          question: "Which Settings section is directly related to the structure of WordPress URLs?",
+          options: [
+            "Privacy",
+            "Permalinks",
+            "Discussion",
+            "Media"
+          ],
+          answer: 1,
+          explanation: "Permalink settings control the site's URL structure. Changing them on a live site must be handled carefully."
+        },
+        {
+          topic: "WordPress Settings",
+          question: "Which type of setting would you expect under General settings?",
+          options: [
+            "Site title and timezone",
+            "Plugin source code",
+            "Every uploaded image file",
+            "Theme template PHP files"
+          ],
+          answer: 0,
+          explanation: "General settings contain foundational site information such as the site title, tagline, timezone, and related basic configuration."
+        },
+
+        {
+          topic: "Permalinks and URLs",
+          question: "In the URL example.com/services/wordpress-development/, what is 'wordpress-development'?",
+          options: [
+            "The slug",
+            "The database password",
+            "The theme name",
+            "The user role"
+          ],
+          answer: 0,
+          explanation: "The slug is the readable URL segment that identifies a page or post within the permalink structure."
+        },
+        {
+          topic: "Permalinks and URLs",
+          question: "Why can changing a live page URL without planning create problems?",
+          options: [
+            "It can break existing links and cause users or search engines to reach the old URL",
+            "It automatically changes the website host",
+            "It permanently disables the Media Library",
+            "It removes all WordPress users"
+          ],
+          answer: 0,
+          explanation: "Existing links, bookmarks, and search engine references may still point to the old URL. A proper redirect and URL migration plan is normally required."
+        },
+        {
+          topic: "Permalinks and URLs",
+          question: "What is the best practice when a published URL genuinely needs to change?",
+          options: [
+            "Change it repeatedly until it looks right",
+            "Plan the change and redirect the old URL to the new destination when appropriate",
+            "Delete the old page and leave a 404 permanently",
+            "Change the WordPress Core files"
+          ],
+          answer: 1,
+          explanation: "URL changes should be deliberate. When an old live URL is replaced, a suitable redirect helps preserve navigation and search continuity."
+        },
+
+        {
+          topic: "WordPress Media Library",
+          question: "What is the main purpose of ALT text for an informative image?",
+          options: [
+            "Describe the image meaningfully for users who cannot see it and for accessibility",
+            "Increase the file size",
+            "Replace the image filename on the server",
+            "Turn the image into a plugin"
+          ],
+          answer: 0,
+          explanation: "ALT text should communicate the image's relevant meaning or purpose when the image is informative. It supports accessibility and should not be stuffed with unrelated keywords."
+        },
+        {
+          topic: "WordPress Media Library",
+          question: "Why should you avoid uploading the same image again and again when an existing suitable asset can be reused?",
+          options: [
+            "Duplicate uploads can create unnecessary media clutter and storage waste",
+            "WordPress allows each image to be used only once",
+            "A reused image cannot have ALT text",
+            "Duplicate images automatically delete posts"
+          ],
+          answer: 0,
+          explanation: "Repeated duplicate uploads make the Media Library harder to manage and can create unnecessary storage and asset duplication."
+        },
+        {
+          topic: "WordPress Media Library",
+          question: "Which workflow is the most sensible for adding an image to a page?",
+          options: [
+            "Prepare or optimize the image, upload it, add useful metadata, then use it in the page",
+            "Upload the largest possible file, skip metadata, and duplicate it for every page",
+            "Add the image to wp-admin Core files",
+            "Store the image as a user account"
+          ],
+          answer: 0,
+          explanation: "A clean media workflow prepares the asset first, uploads it once, adds relevant metadata such as ALT text, and then uses the asset where needed."
+        },
+
+        {
+          topic: "WordPress Updates",
+          question: "Which sequence best represents a safer WordPress update process for an important production site?",
+          options: [
+            "Update everything blindly on production and check later",
+            "Backup, test updates in staging or a controlled environment, verify functionality, then update production",
+            "Delete the site before every update",
+            "Never update WordPress, themes, or plugins"
+          ],
+          answer: 1,
+          explanation: "A safer update workflow protects recoverability and gives you a chance to find compatibility problems before they affect the live site."
+        },
+        {
+          topic: "WordPress Updates",
+          question: "Why should plugin, theme, or Core updates not always be performed blindly on production?",
+          options: [
+            "Updates can sometimes introduce compatibility issues or change behavior",
+            "Updates always delete all website content",
+            "WordPress does not support updates",
+            "Production websites cannot use plugins"
+          ],
+          answer: 0,
+          explanation: "Updates are important, but compatibility between Core, themes, plugins, PHP, and custom code should be considered and tested for important sites."
+        },
+        {
+          topic: "WordPress Updates",
+          question: "Which WordPress components may require ongoing updates?",
+          options: [
+            "WordPress Core, themes, and plugins",
+            "Only Pages",
+            "Only the Media Library",
+            "Only user display names"
+          ],
+          answer: 0,
+          explanation: "Core, themes, and plugins are software components that receive updates. They should be maintained with backups, testing, and compatibility awareness."
+        },
+
+        {
+          topic: "WordPress File Structure",
+          question: "Which folder normally contains themes, plugins, and uploads?",
+          options: [
+            "wp-content",
+            "wp-admin",
+            "wp-includes",
+            "wp-login"
+          ],
+          answer: 0,
+          explanation: "wp-content contains site-specific content such as themes, plugins, and uploads."
+        },
+        {
+          topic: "WordPress File Structure",
+          question: "What do wp-admin and wp-includes mainly contain?",
+          options: [
+            "WordPress Core administration and Core library files",
+            "Only blog post text",
+            "Only uploaded images",
+            "Only custom child themes"
+          ],
+          answer: 0,
+          explanation: "wp-admin and wp-includes are primarily part of WordPress Core. They are not normal locations for site-specific custom code."
+        },
+        {
+          topic: "WordPress File Structure",
+          question: "Where should normal site-specific customizations generally live instead of being placed inside Core folders?",
+          options: [
+            "In appropriate themes, child themes, plugins, or other wp-content based custom code",
+            "Inside random wp-admin files",
+            "Inside random wp-includes files",
+            "Inside the browser's download folder"
+          ],
+          answer: 0,
+          explanation: "Custom work should be separated from Core so WordPress can be updated safely and the customizations remain maintainable."
+        },
+
+        {
+          topic: "WordPress Database Basics",
+          question: "Which type of information belongs conceptually in the WordPress database?",
+          options: [
+            "Posts, users, options, and metadata",
+            "The physical monitor used by the editor",
+            "The hosting company's office address only",
+            "Every theme screenshot as a browser tab"
+          ],
+          answer: 0,
+          explanation: "WordPress uses its database for structured site data such as posts, users, options, taxonomy relationships, and metadata."
+        },
+        {
+          topic: "WordPress Database Basics",
+          question: "When an image is uploaded to WordPress, which statement is most accurate?",
+          options: [
+            "The media file is normally stored in uploads, while WordPress stores attachment records and related metadata in the database",
+            "The complete image is stored only inside wp-admin",
+            "WordPress never records media information in the database",
+            "The image becomes a theme file"
+          ],
+          answer: 0,
+          explanation: "The file itself normally lives in the uploads directory. WordPress stores information about the attachment, its relationship to content, and metadata in the database."
+        },
+        {
+          topic: "WordPress Database Basics",
+          question: "Why is it useful for an intern to understand the database concept even before learning SQL?",
+          options: [
+            "It explains where structured WordPress data lives and why files and database data are different parts of the site",
+            "It means the intern should edit database tables manually for every task",
+            "It removes the need to understand themes and plugins",
+            "It makes backups unnecessary"
+          ],
+          answer: 0,
+          explanation: "A conceptual database understanding helps you reason about what WordPress stores as data versus files, without requiring manual SQL work."
+        },
+
+        {
+          topic: "WordPress Core vs Customization",
+          question: "Why should developers avoid editing WordPress Core files directly?",
+          options: [
+            "Core updates can overwrite those changes and direct Core edits make the site harder to maintain",
+            "Core files can never be opened",
+            "WordPress requires all customizations to be stored in the database",
+            "Editing Core automatically changes the domain name"
+          ],
+          answer: 0,
+          explanation: "Direct Core edits are unsafe because updates can replace them. They also make maintenance, debugging, and future upgrades much harder."
+        },
+        {
+          topic: "WordPress Core vs Customization",
+          question: "Which is the safer place for a theme-specific code customization that must survive parent theme updates?",
+          options: [
+            "A child theme or another appropriate customization layer",
+            "A random file inside wp-includes",
+            "A random file inside wp-admin",
+            "The WordPress Core update package"
+          ],
+          answer: 0,
+          explanation: "Theme-specific customizations should be separated from Core and, when appropriate, from the parent theme. A child theme is one common safe layer."
+        },
+        {
+          topic: "WordPress Core vs Customization",
+          question: "A new business feature is needed on a WordPress site. Which approach follows the safest general principle?",
+          options: [
+            "Add the functionality through an appropriate plugin or custom extension instead of modifying WordPress Core",
+            "Edit wp-includes until the feature works",
+            "Edit wp-admin and never update WordPress again",
+            "Put the functionality inside an uploaded image"
+          ],
+          answer: 0,
+          explanation: "Custom functionality should be implemented outside WordPress Core, usually through plugins, custom plugins, theme-level code where appropriate, or other maintainable extension points."
+        }
+      ];
+
+      var state = null;
+
+      var startScreen = document.getElementById("startScreen");
+      var quizScreen = document.getElementById("quizScreen");
+      var resultScreen = document.getElementById("resultScreen");
+      var internName = document.getElementById("internName");
+      var startBtn = document.getElementById("startBtn");
+      var quizName = document.getElementById("quizName");
+      var questionCount = document.getElementById("questionCount");
+      var liveScore = document.getElementById("liveScore");
+      var progressBar = document.getElementById("progressBar");
+      var topic = document.getElementById("topic");
+      var questionText = document.getElementById("questionText");
+      var options = document.getElementById("options");
+      var feedback = document.getElementById("feedback");
+      var nextWrap = document.getElementById("nextWrap");
+      var nextBtn = document.getElementById("nextBtn");
+      var scorePercent = document.getElementById("scorePercent");
+      var resultName = document.getElementById("resultName");
+      var completedAt = document.getElementById("completedAt");
+      var rightCount = document.getElementById("rightCount");
+      var wrongCount = document.getElementById("wrongCount");
+      var totalCount = document.getElementById("totalCount");
+      var scoreText = document.getElementById("scoreText");
+      var reviewList = document.getElementById("reviewList");
+      var printBtn = document.getElementById("printBtn");
+      var copyBtn = document.getElementById("copyBtn");
+
+      function safeParse(value) {
+        try {
+          return JSON.parse(value);
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function showOnly(screen) {
+        startScreen.classList.add("hidden");
+        quizScreen.classList.add("hidden");
+        resultScreen.classList.add("hidden");
+        screen.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function startQuiz() {
+        var name = internName.value.trim();
+
+        if (name.length < 2) {
+          internName.focus();
+          internName.setAttribute("aria-invalid", "true");
+          return;
+        }
+
+        internName.removeAttribute("aria-invalid");
+
+        state = {
+          version: 1,
+          status: "in_progress",
+          name: name,
+          currentIndex: 0,
+          correct: 0,
+          wrong: 0,
+          responses: {},
+          wrongAnswers: [],
+          startedAt: new Date().toISOString(),
+          completedAt: null
+        };
+
+        saveState();
+        showOnly(quizScreen);
+        renderQuestion();
+      }
+
+      function createOption(questionIndex, optionIndex, text) {
+        var button = document.createElement("button");
+        var letter = document.createElement("span");
+        var copy = document.createElement("span");
+        var response = state.responses[String(questionIndex)];
+
+        button.type = "button";
+        button.className = "option";
+        button.dataset.index = String(optionIndex);
+
+        letter.className = "option-letter";
+        letter.textContent = String.fromCharCode(65 + optionIndex);
+
+        copy.textContent = text;
+
+        button.appendChild(letter);
+        button.appendChild(copy);
+
+        if (response) {
+          button.disabled = true;
+
+          if (optionIndex === response.correctIndex) {
+            button.classList.add("correct");
+          }
+
+          if (!response.isCorrect && optionIndex === response.selectedIndex) {
+            button.classList.add("wrong");
+          }
+        } else {
+          button.addEventListener("click", function () {
+            answerQuestion(optionIndex);
+          });
+        }
+
+        return button;
+      }
+
+      function renderQuestion() {
+        var q = questions[state.currentIndex];
+        var response = state.responses[String(state.currentIndex)];
+        var progress = ((state.currentIndex + 1) / questions.length) * 100;
+
+        quizName.textContent = state.name;
+        questionCount.textContent = "Question " + (state.currentIndex + 1) + " of " + questions.length;
+        liveScore.textContent = "Right: " + state.correct + "  |  Wrong: " + state.wrong;
+        progressBar.style.width = progress + "%";
+        topic.textContent = q.topic;
+        questionText.textContent = q.question;
+
+        options.innerHTML = "";
+        q.options.forEach(function (optionText, optionIndex) {
+          options.appendChild(createOption(state.currentIndex, optionIndex, optionText));
+        });
+
+        if (response) {
+          renderFeedback(response, q);
+        } else {
+          feedback.className = "feedback hidden";
+          feedback.innerHTML = "";
+          nextWrap.classList.add("hidden");
+        }
+      }
+
+      function answerQuestion(selectedIndex) {
+        var q = questions[state.currentIndex];
+        var isCorrect = selectedIndex === q.answer;
+        var response = {
+          selectedIndex: selectedIndex,
+          correctIndex: q.answer,
+          isCorrect: isCorrect,
+          answeredAt: new Date().toISOString()
+        };
+
+        state.responses[String(state.currentIndex)] = response;
+
+        if (isCorrect) {
+          state.correct += 1;
+        } else {
+          state.wrong += 1;
+          state.wrongAnswers.push({
+            questionIndex: state.currentIndex,
+            topic: q.topic,
+            question: q.question,
+            selectedAnswer: q.options[selectedIndex],
+            correctAnswer: q.options[q.answer],
+            explanation: q.explanation
+          });
+        }
+
+        saveState();
+        renderQuestion();
+      }
+
+      function renderFeedback(response, q) {
+        feedback.classList.remove("hidden", "correct-feedback", "wrong-feedback");
+        feedback.innerHTML = "";
+
+        var title = document.createElement("div");
+        title.className = "feedback-title";
+
+        if (response.isCorrect) {
+          feedback.classList.add("correct-feedback");
+          title.textContent = "Correct";
+          feedback.appendChild(title);
+
+          var correctText = document.createElement("p");
+          correctText.textContent = "Good. " + q.explanation;
+          feedback.appendChild(correctText);
+        } else {
+          feedback.classList.add("wrong-feedback");
+          title.textContent = "Incorrect";
+          feedback.appendChild(title);
+
+          var yourAnswer = document.createElement("p");
+          var yourLabel = document.createElement("strong");
+          yourLabel.textContent = "Your answer: ";
+          yourAnswer.appendChild(yourLabel);
+          yourAnswer.appendChild(document.createTextNode(q.options[response.selectedIndex]));
+          feedback.appendChild(yourAnswer);
+
+          var correctAnswer = document.createElement("p");
+          var correctLabel = document.createElement("strong");
+          correctLabel.textContent = "Correct answer: ";
+          correctAnswer.appendChild(correctLabel);
+          correctAnswer.appendChild(document.createTextNode(q.options[q.answer]));
+          feedback.appendChild(correctAnswer);
+
+          var concept = document.createElement("p");
+          var conceptLabel = document.createElement("strong");
+          conceptLabel.textContent = "Why: ";
+          concept.appendChild(conceptLabel);
+          concept.appendChild(document.createTextNode(q.explanation));
+          feedback.appendChild(concept);
+        }
+
+        nextWrap.classList.remove("hidden");
+        nextBtn.textContent = state.currentIndex === questions.length - 1 ? "Finish Quiz" : "Next Question";
+        liveScore.textContent = "Right: " + state.correct + "  |  Wrong: " + state.wrong;
+      }
+
+      function nextQuestion() {
+        var response = state.responses[String(state.currentIndex)];
+
+        if (!response) {
+          return;
+        }
+
+        if (state.currentIndex >= questions.length - 1) {
+          completeQuiz();
+          return;
+        }
+
+        state.currentIndex += 1;
+        saveState();
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function completeQuiz() {
+        state.status = "completed";
+        state.completedAt = new Date().toISOString();
+        saveState();
+        renderResult();
+      }
+
+      function makeReviewCard(item, position) {
+        var card = document.createElement("article");
+        card.className = "review-card";
+
+        var topicEl = document.createElement("div");
+        topicEl.className = "review-topic";
+        topicEl.textContent = "Question " + (item.questionIndex + 1) + " - " + item.topic;
+
+        var heading = document.createElement("h3");
+        heading.textContent = item.question;
+
+        var yourLine = document.createElement("div");
+        yourLine.className = "review-line";
+        var yourStrong = document.createElement("strong");
+        yourStrong.textContent = "Your answer: ";
+        yourLine.appendChild(yourStrong);
+        yourLine.appendChild(document.createTextNode(item.selectedAnswer));
+
+        var correctLine = document.createElement("div");
+        correctLine.className = "review-line";
+        var correctStrong = document.createElement("strong");
+        correctStrong.textContent = "Correct answer: ";
+        correctLine.appendChild(correctStrong);
+        correctLine.appendChild(document.createTextNode(item.correctAnswer));
+
+        var note = document.createElement("div");
+        note.className = "concept-note";
+        var noteStrong = document.createElement("strong");
+        noteStrong.textContent = "Correct concept: ";
+        note.appendChild(noteStrong);
+        note.appendChild(document.createTextNode(item.explanation));
+
+        card.appendChild(topicEl);
+        card.appendChild(heading);
+        card.appendChild(yourLine);
+        card.appendChild(correctLine);
+        card.appendChild(note);
+
+        return card;
+      }
+
+      function renderResult() {
+        var total = questions.length;
+        var percent = Math.round((state.correct / total) * 100);
+
+        showOnly(resultScreen);
+
+        scorePercent.textContent = percent + "%";
+        resultName.textContent = state.name;
+        completedAt.textContent = state.completedAt
+          ? "Completed: " + new Date(state.completedAt).toLocaleString()
+          : "";
+        rightCount.textContent = state.correct;
+        wrongCount.textContent = state.wrong;
+        totalCount.textContent = total;
+        scoreText.textContent = state.correct + "/" + total;
+
+        reviewList.innerHTML = "";
+
+        if (!state.wrongAnswers || state.wrongAnswers.length === 0) {
+          var perfect = document.createElement("div");
+          perfect.className = "perfect";
+          perfect.textContent = "No wrong answers. You completed Module 1 with a perfect score.";
+          reviewList.appendChild(perfect);
+        } else {
+          state.wrongAnswers.forEach(function (item, index) {
+            reviewList.appendChild(makeReviewCard(item, index));
+          });
+        }
+      }
+
+      function copySummary() {
+        var total = questions.length;
+        var percent = Math.round((state.correct / total) * 100);
+        var text =
+          "WordPress Module 1 Assessment\\n" +
+          "Name: " + state.name + "\\n" +
+          "Score: " + state.correct + "/" + total + " (" + percent + "%)\\n" +
+          "Right answers: " + state.correct + "\\n" +
+          "Wrong answers: " + state.wrong + "\\n" +
+          "Completed: " + (state.completedAt ? new Date(state.completedAt).toLocaleString() : "");
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            copyBtn.textContent = "Copied";
+            window.setTimeout(function () {
+              copyBtn.textContent = "Copy Score Summary";
+            }, 1600);
+          });
+        }
+      }
+
+      function restore() {
+        var stored = safeParse(localStorage.getItem(STORAGE_KEY));
+
+        if (!stored || !stored.status || !stored.name) {
+          state = null;
+          showOnly(startScreen);
+          return;
+        }
+
+        state = stored;
+
+        if (state.status === "completed") {
+          renderResult();
+          return;
+        }
+
+        if (state.status === "in_progress") {
+          if (typeof state.currentIndex !== "number" || state.currentIndex < 0 || state.currentIndex >= questions.length) {
+            state.currentIndex = 0;
+          }
+
+          if (!state.responses) {
+            state.responses = {};
+          }
+
+          if (!state.wrongAnswers) {
+            state.wrongAnswers = [];
+          }
+
+          showOnly(quizScreen);
+          renderQuestion();
+          return;
+        }
+
+        showOnly(startScreen);
+      }
+
+      startBtn.addEventListener("click", startQuiz);
+
+      internName.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          startQuiz();
+        }
+      });
+
+      nextBtn.addEventListener("click", nextQuestion);
+      printBtn.addEventListener("click", function () {
+        window.print();
+      });
+      copyBtn.addEventListener("click", copySummary);
+
+      restore();
+    })();
+  </script>
+</body>
+</html>
